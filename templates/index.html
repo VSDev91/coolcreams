@@ -1,0 +1,56 @@
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1613160717888-faa82cdb8a94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>BB Games</h1>
+            <span class="subheading">A collection of games by gamers.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% if current_user.is_authenticated: %}
+        {% for game in game_list %}
+        <div class="post-preview">
+          <a href="{{ url_for('home', game_id=gane.id) }}">
+            <h2 class="post-title">
+              {{gane.title}}
+            </h2>
+            <h3 class="post-subtitle">
+              {{game.subtitle}}
+            </h3>
+          </a>
+          <p class="post-meta">Published by
+            <a href="#">{{game.publisher.name}}</a>
+            on {{game.date}}
+          {% if current_user.id == 1: %}
+            <a href="{{url_for('home', post_id=post.id) }}">✘</a>
+          {% endif %}
+          </p>
+        </div>
+        <hr>
+        {% endfor %}
+        {% endif %}
+
+        <!-- New Post -->
+        {% if current_user.id == 1: %}
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="{{url_for('home')}}">Create New Post</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <hr>
+
+{% include "footer.html" %}
